@@ -19,6 +19,7 @@ export class CreateReminderController {
     const reminder = await this.service.execute({
       title: dto.title,
       description: dto.description,
+      isActive: dto.isActive,
       status: dto.status,
       dueDates: dto.dueDates,
     });
@@ -27,6 +28,7 @@ export class CreateReminderController {
       reminder.getId(),
       reminder.getTitle(),
       reminder.getDescription(),
+      reminder.getIsActive(),
       reminder.getStatus(),
       reminder.getDueDates().map((dueDate) => dueDate.getDate()),
       reminder.getCreatedAt(),

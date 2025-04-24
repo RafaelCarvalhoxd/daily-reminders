@@ -5,6 +5,7 @@ export interface IReminderRepository {
   createReminder(input: {
     title: string;
     description: string;
+    isActive: boolean;
     status: ReminderStatusEnum;
     dueDates: Date[];
   }): Promise<Reminder>;

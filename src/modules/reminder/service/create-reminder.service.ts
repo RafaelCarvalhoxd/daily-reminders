@@ -11,6 +11,7 @@ export class CreateReminderService implements ICreateReminderService {
   async execute(input: {
     title: string;
     description: string;
+    isActive: boolean;
     status: ReminderStatusEnum;
     dueDates: Date[];
   }): Promise<Reminder> {

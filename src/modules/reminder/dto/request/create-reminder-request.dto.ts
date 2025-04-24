@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
 
 export class CreateReminderRequestDto {
@@ -18,6 +24,14 @@ export class CreateReminderRequestDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @ApiProperty({
+    description: 'Indicates if the reminder is active.',
+    example: true,
+  })
+  @IsNotEmpty()
+  @IsBoolean()
+  isActive: boolean;
 
   @ApiProperty({
     description: 'The status of the reminder.',

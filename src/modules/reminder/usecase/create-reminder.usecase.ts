@@ -13,12 +13,14 @@ export class CreateReminderUseCase {
   async execute(input: {
     title: string;
     description: string;
+    isActive: boolean;
     status: ReminderStatusEnum;
     dueDates: Date[];
   }): Promise<Reminder> {
     const reminder = await this.reminderRepository.createReminder({
       title: input.title,
       description: input.description,
+      isActive: input.isActive,
       status: input.status,
       dueDates: input.dueDates,
     });

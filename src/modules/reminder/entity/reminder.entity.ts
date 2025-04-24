@@ -5,6 +5,7 @@ export class Reminder {
   private readonly _id: string;
   private readonly _title: string;
   private readonly _description: string;
+  private readonly _isActive: boolean;
   private readonly _status: ReminderStatusEnum;
   private readonly _dueDates: DueDate[];
   private readonly _createdAt: Date;
@@ -14,6 +15,7 @@ export class Reminder {
     id: string,
     title: string,
     description: string,
+    isActive: boolean,
     status: ReminderStatusEnum,
     dueDates: DueDate[],
     createdAt: Date,
@@ -22,6 +24,7 @@ export class Reminder {
     this._id = id;
     this._title = title;
     this._description = description;
+    this._isActive = isActive;
     this._status = status;
     this._dueDates = dueDates;
     this._createdAt = createdAt;
@@ -38,6 +41,10 @@ export class Reminder {
 
   public getDescription(): string {
     return this._description;
+  }
+
+  public getIsActive(): boolean {
+    return this._isActive;
   }
 
   public getStatus(): ReminderStatusEnum {

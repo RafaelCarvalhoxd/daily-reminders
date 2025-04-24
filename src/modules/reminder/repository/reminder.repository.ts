@@ -13,6 +13,7 @@ export class ReminderRepository implements IReminderRepository {
   async createReminder(input: {
     title: string;
     description: string;
+    isActive: boolean;
     status: ReminderStatusEnum;
     dueDates: Date[];
   }): Promise<Reminder> {
@@ -22,6 +23,7 @@ export class ReminderRepository implements IReminderRepository {
       const reminder = reminderRepository.create({
         title: input.title,
         description: input.description,
+        isActive: input.isActive,
         status: input.status,
       });
 

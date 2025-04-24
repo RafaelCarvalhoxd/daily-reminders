@@ -21,6 +21,9 @@ export class ReminderModel {
   @Column({ name: 'description' })
   description: string;
 
+  @Column({ name: 'is_active' })
+  isActive: boolean;
+
   @Column({
     type: 'enum',
     enum: ReminderStatusEnum,
@@ -48,6 +51,7 @@ export class ReminderModel {
       reminder.id,
       reminder.title,
       reminder.description,
+      reminder.isActive,
       reminder.status,
       reminder.dueDates?.map((dueDate) => dueDate.toEntity()) ?? [],
       reminder.createdAt,
