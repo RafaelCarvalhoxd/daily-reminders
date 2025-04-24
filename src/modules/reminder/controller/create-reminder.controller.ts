@@ -5,7 +5,7 @@ import { ReminderResponseDto } from 'src/modules/reminder/dto/response/reminder-
 import { ICreateReminderService } from 'src/modules/reminder/interfaces/service/create-reminder.service';
 
 @ApiTags('Reminder')
-@Controller('Reminder')
+@Controller('reminder')
 export class CreateReminderController {
   constructor(
     @Inject('ICreateReminderService')
