@@ -49,7 +49,7 @@ export class ReminderModel {
       reminder.title,
       reminder.description,
       reminder.status,
-      reminder.dueDates.map((dueDate) => dueDate.toEntity()),
+      reminder.dueDates?.map((dueDate) => dueDate.toEntity()) ?? [],
       reminder.createdAt,
       reminder.updatedAt,
     );
