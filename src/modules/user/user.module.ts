@@ -6,19 +6,22 @@ import { UserRepository } from 'src/modules/user/repository/user.repository';
 import { FindUserService } from 'src/modules/user/service/find-user.service';
 import { FindUserUseCase } from 'src/modules/user/usecase/find-user.usecase';
 
+const providers = [
+  FindUserUseCase,
+  {
+    provide: 'IFindUserService',
+    useClass: FindUserService,
+  },
+  {
+    provide: 'IUserRepository',
+    useClass: UserRepository,
+  },
+];
+
 @Module({
   imports: [TypeOrmModule.forFeature([UserModel])],
   controllers: [UserController],
-  providers: [
-    FindUserUseCase,
-    {
-      provide: 'IFindUserService',
-      useClass: FindUserService,
-    },
-    {
-      provide: 'IUserRepository',
-      useClass: UserRepository,
-    },
-  ],
+  providers: [...providers],
+  exports: [...providers],
 })
 export class UserModule {}

@@ -7,19 +7,22 @@ import { ReminderRepository } from 'src/modules/reminder/repository/reminder.rep
 import { CreateReminderService } from 'src/modules/reminder/service/create-reminder.service';
 import { CreateReminderUseCase } from 'src/modules/reminder/usecase/create-reminder.usecase';
 
+const providers = [
+  CreateReminderUseCase,
+  {
+    provide: 'ICreateReminderService',
+    useClass: CreateReminderService,
+  },
+  {
+    provide: 'IReminderRepository',
+    useClass: ReminderRepository,
+  },
+];
+
 @Module({
   imports: [TypeOrmModule.forFeature([ReminderModel, DueDateModel])],
   controllers: [ReminderController],
-  providers: [
-    CreateReminderUseCase,
-    {
-      provide: 'ICreateReminderService',
-      useClass: CreateReminderService,
-    },
-    {
-      provide: 'IReminderRepository',
-      useClass: ReminderRepository,
-    },
-  ],
+  providers: [...providers],
+  exports: [...providers],
 })
 export class ReminderModule {}
