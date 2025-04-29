@@ -6,17 +6,17 @@ import { ICreateReminderService } from 'src/modules/reminder/interfaces/service/
 
 @ApiTags('Reminder')
 @Controller('reminder')
-export class CreateReminderController {
+export class ReminderController {
   constructor(
     @Inject('ICreateReminderService')
-    private readonly service: ICreateReminderService,
+    private readonly createService: ICreateReminderService,
   ) {}
 
   @Post()
   async createReminder(
     @Body() dto: CreateReminderRequestDto,
   ): Promise<ReminderResponseDto> {
-    const reminder = await this.service.execute({
+    const reminder = await this.createService.execute({
       title: dto.title,
       description: dto.description,
       isActive: dto.isActive,
@@ -24,15 +24,6 @@ export class CreateReminderController {
       dueDates: dto.dueDates,
     });
 
-    return new ReminderResponseDto(
-      reminder.getId(),
-      reminder.getTitle(),
-      reminder.getDescription(),
-      reminder.getIsActive(),
-      reminder.getStatus(),
-      reminder.getDueDates().map((dueDate) => dueDate.getDate()),
-      reminder.getCreatedAt(),
-      reminder.getUpdatedAt(),
-    );
+    return ReminderResponseDto.toJson(reminder);
   }
 }
