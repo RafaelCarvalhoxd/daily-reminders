@@ -1,3 +1,5 @@
+import { Reminder } from 'src/modules/reminder/entity/reminder.entity';
+
 export class ReminderResponseDto {
   public readonly id: string;
   public readonly title: string;
@@ -28,5 +30,18 @@ export class ReminderResponseDto {
     this.dueDates = dueDates.map((date) => ({ date }));
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+  }
+
+  static toJson(entity: Reminder): ReminderResponseDto {
+    return new ReminderResponseDto(
+      entity.getId(),
+      entity.getTitle(),
+      entity.getDescription(),
+      entity.getIsActive(),
+      entity.getStatus(),
+      entity.getDueDates().map((dueDate) => dueDate.getDate()),
+      entity.getCreatedAt(),
+      entity.getUpdatedAt(),
+    );
   }
 }
