@@ -43,19 +43,15 @@ export class ReminderModel {
   updatedAt: Date;
 
   toEntity(): Reminder {
-    return ReminderModel.toEntity(this);
-  }
-
-  static toEntity(reminder: ReminderModel): Reminder {
     return new Reminder(
-      reminder.id,
-      reminder.title,
-      reminder.description,
-      reminder.isActive,
-      reminder.status,
-      reminder.dueDates?.map((dueDate) => dueDate.toEntity()) ?? [],
-      reminder.createdAt,
-      reminder.updatedAt,
+      this.id,
+      this.title,
+      this.description,
+      this.isActive,
+      this.status,
+      this.dueDates.map((dueDate) => dueDate.toEntity()),
+      this.createdAt,
+      this.updatedAt,
     );
   }
 }
