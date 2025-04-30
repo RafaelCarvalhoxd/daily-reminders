@@ -14,7 +14,7 @@ export class FindUserUseCase {
     email?: string;
     phoneNumber?: string;
   }): Promise<User> {
-    const user = await this.userRepository.findUserRepository({
+    const user = await this.userRepository.findUser({
       id: input.id,
       name: input.name,
       email: input.email,
