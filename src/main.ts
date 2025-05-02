@@ -23,7 +23,15 @@ async function bootstrap() {
     .setTitle('Daily Reminder API')
     .setDescription('API for Daily Reminder')
     .setVersion('1.0.0')
-    .addBearerAuth()
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'JWT Authorization header using the Bearer scheme.',
+      },
+      'access-token',
+    )
     .build();
 
   const documentFactory = SwaggerModule.createDocument(app, documentBuilder);
