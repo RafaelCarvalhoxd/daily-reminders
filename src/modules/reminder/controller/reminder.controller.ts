@@ -1,9 +1,11 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Inject, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateReminderRequestDto } from 'src/modules/reminder/dto/request/create-reminder-request.dto';
 import { ReminderResponseDto } from 'src/modules/reminder/dto/response/reminder-response.dto';
 import { ICreateReminderService } from 'src/modules/reminder/interfaces/service/create-reminder.service';
+import { AuthGuard } from 'src/shared/guard/auth.guard';
 
+@ApiBearerAuth('access-token')
 @ApiTags('Reminder')
 @Controller('reminder')
 export class ReminderController {
@@ -12,6 +14,7 @@ export class ReminderController {
     private readonly createService: ICreateReminderService,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async createReminder(
     @Body() dto: CreateReminderRequestDto,
