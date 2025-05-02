@@ -8,13 +8,16 @@ import { CreateReminderUseCase } from 'src/modules/reminder/usecase/create-remin
 export class CreateReminderService implements ICreateReminderService {
   constructor(private readonly createReminderUseCase: CreateReminderUseCase) {}
 
-  async execute(input: {
-    title: string;
-    description: string;
-    isActive: boolean;
-    status: ReminderStatusEnum;
-    dueDates: Date[];
-  }): Promise<Reminder> {
-    return await this.createReminderUseCase.execute(input);
+  async execute(
+    input: {
+      title: string;
+      description: string;
+      isActive: boolean;
+      status: ReminderStatusEnum;
+      dueDates: Date[];
+    },
+    userId: number,
+  ): Promise<Reminder> {
+    return await this.createReminderUseCase.execute(input, userId);
   }
 }

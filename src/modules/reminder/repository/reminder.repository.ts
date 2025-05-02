@@ -4,19 +4,23 @@ import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.en
 import { IReminderRepository } from 'src/modules/reminder/interfaces/repository/reminder-repository.interface';
 import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.entity';
 import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.entity';
+// import { User } from 'src/modules/user/entity/user.entity';
 import { DataSource } from 'typeorm';
 
 @Injectable()
 export class ReminderRepository implements IReminderRepository {
   constructor(private readonly ds: DataSource) {}
 
-  async createReminder(input: {
-    title: string;
-    description: string;
-    isActive: boolean;
-    status: ReminderStatusEnum;
-    dueDates: Date[];
-  }): Promise<Reminder> {
+  async createReminder(
+    input: {
+      title: string;
+      description: string;
+      isActive: boolean;
+      status: ReminderStatusEnum;
+      dueDates: Date[];
+    },
+    user: number,
+  ): Promise<Reminder> {
     return await this.ds.transaction(async (manager) => {
       const reminderRepository = manager.getRepository(ReminderModel);
 
@@ -25,6 +29,9 @@ export class ReminderRepository implements IReminderRepository {
         description: input.description,
         isActive: input.isActive,
         status: input.status,
+        user: {
+          id: user,
+        },
       });
 
       const savedReminder = await reminderRepository.save(reminder);

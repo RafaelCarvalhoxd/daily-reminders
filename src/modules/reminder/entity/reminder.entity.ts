@@ -1,5 +1,6 @@
 import { DueDate } from 'src/modules/reminder/entity/due-date.entity';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
+import { User } from 'src/modules/user/entity/user.entity';
 
 export class Reminder {
   private readonly _id: string;
@@ -10,6 +11,7 @@ export class Reminder {
   private readonly _dueDates: DueDate[];
   private readonly _createdAt: Date;
   private readonly _updatedAt: Date;
+  private readonly _user: User;
 
   constructor(
     id: string,
@@ -20,6 +22,7 @@ export class Reminder {
     dueDates: DueDate[],
     createdAt: Date,
     updatedAt: Date,
+    user: User,
   ) {
     this._id = id;
     this._title = title;
@@ -29,6 +32,7 @@ export class Reminder {
     this._dueDates = dueDates;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
+    this._user = user;
   }
 
   public getId(): string {
@@ -61,5 +65,9 @@ export class Reminder {
 
   public getUpdatedAt(): Date {
     return this._updatedAt;
+  }
+
+  public getUser(): User {
+    return this._user;
   }
 }

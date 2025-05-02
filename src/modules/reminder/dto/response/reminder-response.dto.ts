@@ -11,6 +11,10 @@ export class ReminderResponseDto {
   }[];
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
+  public readonly user: {
+    id: number;
+    name: string;
+  };
 
   constructor(
     id: string,
@@ -21,6 +25,10 @@ export class ReminderResponseDto {
     dueDates: Date[],
     createdAt: Date,
     updatedAt: Date,
+    user: {
+      id: number;
+      name: string;
+    },
   ) {
     this.id = id;
     this.title = title;
@@ -30,6 +38,7 @@ export class ReminderResponseDto {
     this.dueDates = dueDates.map((date) => ({ date }));
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.user = user;
   }
 
   static toJson(entity: Reminder): ReminderResponseDto {
@@ -42,6 +51,10 @@ export class ReminderResponseDto {
       entity.getDueDates().map((dueDate) => dueDate.getDate()),
       entity.getCreatedAt(),
       entity.getUpdatedAt(),
+      {
+        id: entity.getUser().getId(),
+        name: entity.getUser().getName(),
+      },
     );
   }
 }

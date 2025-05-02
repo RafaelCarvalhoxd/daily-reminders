@@ -1,6 +1,7 @@
 import { Reminder } from 'src/modules/reminder/entity/reminder.entity';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
 import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.entity';
+import { UserModel } from 'src/modules/user/repository/models/user.model';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +9,8 @@ import {
   CreateDateColumn,
   OneToMany,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('reminders')
@@ -42,6 +45,10 @@ export class ReminderModel {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  @ManyToOne(() => UserModel)
+  @JoinColumn({ name: 'user_id' })
+  user: UserModel;
+
   toEntity(): Reminder {
     return new Reminder(
       this.id,
@@ -52,6 +59,7 @@ export class ReminderModel {
       this.dueDates?.map((dueDate) => dueDate?.toEntity()) ?? [],
       this.createdAt,
       this.updatedAt,
+      this.user?.toEntity(),
     );
   }
 }
