@@ -21,6 +21,6 @@ export class DueDateModel {
   reminder: ReminderModel;
 
   toEntity(): DueDate {
-    return new DueDate(this.id, this.date, this.reminder.toEntity());
+    return new DueDate(this.id, this.date, this.reminder?.toEntity());
   }
 }
