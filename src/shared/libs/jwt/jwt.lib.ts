@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IJwtLib } from 'src/shared/libs/jwt/interface/jwt-lib.interface';
 
+@Injectable()
 export class JwtLib implements IJwtLib {
   constructor(private readonly jwtService: JwtService) {}
 

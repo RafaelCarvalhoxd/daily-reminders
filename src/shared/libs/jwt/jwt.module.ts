@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtLib } from 'src/shared/libs/jwt/jwt.lib';
 
-const resources: Provider[] = [
+const providers: Provider[] = [
   {
     provide: 'IJwtLib',
     useClass: JwtLib,
@@ -24,7 +24,7 @@ const resources: Provider[] = [
       global: true,
     }),
   ],
-  providers: [...resources],
-  exports: [...resources],
+  providers: [...providers],
+  exports: [...providers],
 })
 export class JwtServiceModule {}
