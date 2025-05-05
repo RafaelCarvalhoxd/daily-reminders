@@ -6,11 +6,7 @@ import { DataSource } from 'typeorm';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
-  private readonly _userRepository;
-
-  constructor(private readonly ds: DataSource) {
-    this._userRepository = this.ds.getRepository(UserModel);
-  }
+  constructor(private readonly ds: DataSource) {}
 
   async findUser(input: {
     id?: number;
@@ -18,7 +14,8 @@ export class UserRepository implements IUserRepository {
     email?: string;
     phoneNumber?: string;
   }): Promise<User | null> {
-    const user = await this._userRepository.findOne({
+    const userRepository = this.ds.getRepository(UserModel);
+    const user = await userRepository.findOne({
       where: {
         ...(input.id ? { id: input.id } : {}),
         ...(input.name ? { name: input.name } : {}),
@@ -35,7 +32,8 @@ export class UserRepository implements IUserRepository {
     phoneNumber: string;
     password: string;
   }): Promise<User> {
-    const toSaveUser = this._userRepository.create({
+    const userRepository = this.ds.getRepository(UserModel);
+    const toSaveUser = userRepository.create({
       name: input.name,
       email: input.email,
       phoneNumber: input.phoneNumber,
@@ -43,7 +41,7 @@ export class UserRepository implements IUserRepository {
       emailReminderEnabled: true,
       smsReminderEnabled: false,
     });
-    const savedUser = await this._userRepository.save(toSaveUser);
+    const savedUser = await userRepository.save(toSaveUser);
     return savedUser.toEntity();
   }
 }

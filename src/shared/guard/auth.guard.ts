@@ -8,6 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { IJwtLib } from 'src/shared/libs/jwt/interface/jwt-lib.interface';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -25,11 +26,16 @@ export class AuthGuard implements CanActivate {
     const secret = this.configService.get<string>('jwt.secret');
     if (!secret) throw new Error('JWT secret is not defined');
 
-    const payload = await this.jwtLib.verify(token, secret);
-    if (!payload) throw new UnauthorizedException('Invalid token');
-
-    request['user'] = payload;
-    return true;
+    try {
+      const payload = await this.jwtLib.verify(token, secret);
+      request['user'] = payload;
+      return true;
+    } catch (err) {
+      if (err instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Token expired');
+      }
+      throw new UnauthorizedException('Invalid token');
+    }
   }
 
   private extractTokenFromHeader(request: Request): string {

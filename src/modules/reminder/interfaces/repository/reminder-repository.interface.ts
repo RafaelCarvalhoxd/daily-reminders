@@ -12,4 +12,11 @@ export interface IReminderRepository {
     },
     userId: number,
   ): Promise<Reminder>;
+
+  listReminder(
+    input: {
+      title?: string;
+    },
+    userId: number,
+  ): Promise<Reminder[]>;
 }
