@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReminderController } from 'src/modules/reminder/controller/reminder.controller';
-import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.entity';
-import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.entity';
+import { DayModel } from 'src/modules/reminder/repository/models/day.model';
+import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.model';
+import { ReminderDayModel } from 'src/modules/reminder/repository/models/reminder-day.model';
+import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.model';
 import { ReminderRepository } from 'src/modules/reminder/repository/reminder.repository';
 import { CreateReminderService } from 'src/modules/reminder/service/create-reminder.service';
 import { CreateReminderUseCase } from 'src/modules/reminder/usecase/create-reminder.usecase';
@@ -28,7 +30,12 @@ const providers = [
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ReminderModel, DueDateModel]),
+    TypeOrmModule.forFeature([
+      ReminderModel,
+      DueDateModel,
+      ReminderDayModel,
+      DayModel,
+    ]),
     UserModule,
   ],
   controllers: [ReminderController],

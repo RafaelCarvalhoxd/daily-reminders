@@ -41,6 +41,10 @@ export class ReminderController {
         isActive: dto.isActive,
         status: dto.status,
         dueDates: dto.dueDates,
+        days: dto.days?.map((day) => ({
+          id: day.id,
+          time: day.time,
+        })),
       },
       user.id,
     );

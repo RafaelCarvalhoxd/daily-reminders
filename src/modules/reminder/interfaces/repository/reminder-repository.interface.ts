@@ -1,3 +1,4 @@
+import { Day } from 'src/modules/reminder/entity/day.entity';
 import { Reminder } from 'src/modules/reminder/entity/reminder.entity';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
 
@@ -8,7 +9,11 @@ export interface IReminderRepository {
       description: string;
       isActive: boolean;
       status: ReminderStatusEnum;
-      dueDates: Date[];
+      dueDates?: Date[];
+      days?: {
+        id: number;
+        time: string;
+      }[];
     },
     userId: number,
   ): Promise<Reminder>;
@@ -19,4 +24,6 @@ export interface IReminderRepository {
     },
     userId: number,
   ): Promise<Reminder[]>;
+
+  findDay(input: { ids: number[] }): Promise<Day[]>;
 }

@@ -8,7 +8,11 @@ export interface ICreateReminderService {
       description: string;
       isActive: boolean;
       status: ReminderStatusEnum;
-      dueDates: Date[];
+      dueDates?: Date[];
+      days?: {
+        id: number;
+        time: string;
+      }[];
     },
     userId: number,
   ): Promise<Reminder>;

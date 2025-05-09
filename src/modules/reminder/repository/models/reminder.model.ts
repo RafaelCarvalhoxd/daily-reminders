@@ -1,6 +1,7 @@
 import { Reminder } from 'src/modules/reminder/entity/reminder.entity';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
-import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.entity';
+import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.model';
+import { ReminderDayModel } from 'src/modules/reminder/repository/models/reminder-day.model';
 import { UserModel } from 'src/modules/user/repository/models/user.model';
 import {
   Entity,
@@ -49,6 +50,9 @@ export class ReminderModel {
   @JoinColumn({ name: 'user_id' })
   user: UserModel;
 
+  @OneToMany(() => ReminderDayModel, (reminderDay) => reminderDay.reminder)
+  reminderDays: ReminderDayModel[];
+
   toEntity(): Reminder {
     return new Reminder(
       this.id,
@@ -57,6 +61,10 @@ export class ReminderModel {
       this.isActive,
       this.status,
       this.dueDates?.map((dueDate) => dueDate?.toEntity()) ?? [],
+      this.reminderDays?.map((reminderDay) => ({
+        day: reminderDay.toEntity().day,
+        time: reminderDay.toEntity().time,
+      })) ?? [],
       this.createdAt,
       this.updatedAt,
       this.user?.toEntity(),

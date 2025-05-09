@@ -15,6 +15,10 @@ export class CreateReminderService implements ICreateReminderService {
       isActive: boolean;
       status: ReminderStatusEnum;
       dueDates: Date[];
+      days: {
+        id: number;
+        time: string;
+      }[];
     },
     userId: number,
   ): Promise<Reminder> {

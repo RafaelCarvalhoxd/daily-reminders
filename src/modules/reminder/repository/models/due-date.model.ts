@@ -1,5 +1,5 @@
 import { DueDate } from 'src/modules/reminder/entity/due-date.entity';
-import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.entity';
+import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.model';
 import {
   Entity,
   PrimaryGeneratedColumn,

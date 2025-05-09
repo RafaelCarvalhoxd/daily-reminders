@@ -15,6 +15,11 @@ export class ReminderResponseDto {
     id: number;
     name: string;
   };
+  public readonly days: {
+    id: number;
+    name: string;
+    time: string;
+  }[];
 
   constructor(
     id: string,
@@ -29,6 +34,11 @@ export class ReminderResponseDto {
       id: number;
       name: string;
     },
+    days: {
+      id: number;
+      name: string;
+      time: string;
+    }[],
   ) {
     this.id = id;
     this.title = title;
@@ -39,6 +49,7 @@ export class ReminderResponseDto {
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.user = user;
+    this.days = days;
   }
 
   static toJson(entity: Reminder): ReminderResponseDto {
@@ -55,6 +66,11 @@ export class ReminderResponseDto {
         id: entity.getUser().getId(),
         name: entity.getUser().getName(),
       },
+      entity.getDays().map((day) => ({
+        id: day.day.getId(),
+        name: day.day.getName(),
+        time: day.time,
+      })),
     );
   }
 }
