@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.entity';
-import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.entity';
+import { ReminderModel } from 'src/modules/reminder/repository/models/reminder.model';
+import { DueDateModel } from 'src/modules/reminder/repository/models/due-date.model';
 import { UserModel } from 'src/modules/user/repository/models/user.model';
+import { DayModel } from 'src/modules/reminder/repository/models/day.model';
+import { ReminderDayModel } from 'src/modules/reminder/repository/models/reminder-day.model';
 
 @Module({
   imports: [
@@ -15,7 +17,13 @@ import { UserModel } from 'src/modules/user/repository/models/user.model';
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.database'),
-        entities: [ReminderModel, DueDateModel, UserModel],
+        entities: [
+          ReminderModel,
+          DueDateModel,
+          ReminderDayModel,
+          DayModel,
+          UserModel,
+        ],
         autoLoadEntities: true,
         synchronize: true,
         logging: true,
