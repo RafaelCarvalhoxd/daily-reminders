@@ -20,5 +20,11 @@ export default () => {
       password: requiredEnv('DATABASE_PASSWORD'),
       database: requiredEnv('DATABASE_NAME'),
     },
+    mail: {
+      host: requiredEnv('MAIL_HOST'),
+      port: parseInt(process.env.MAIL_PORT ?? '587', 10),
+      user: requiredEnv('MAIL_USER'),
+      pass: requiredEnv('MAIL_PASS'),
+    },
   };
 };
