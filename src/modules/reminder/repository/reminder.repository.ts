@@ -95,6 +95,9 @@ export class ReminderRepository implements IReminderRepository {
       relations: {
         dueDates: true,
         user: true,
+        reminderDays: {
+          day: true,
+        },
       },
     });
 
