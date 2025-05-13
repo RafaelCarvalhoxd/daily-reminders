@@ -26,4 +26,6 @@ export interface IReminderRepository {
   ): Promise<Reminder[]>;
 
   findDay(input: { ids: number[] }): Promise<Day[]>;
+
+  findReminder(input: { id: string }): Promise<Reminder | undefined>;
 }

@@ -75,7 +75,24 @@ export class ReminderRepository implements IReminderRepository {
         await reminderDayRepository.save(reminderDays);
       }
 
-      return savedReminder.toEntity();
+      const newReminder = await reminderRepository.findOne({
+        where: {
+          id: savedReminder.id,
+        },
+        relations: {
+          dueDates: true,
+          user: true,
+          reminderDays: {
+            day: true,
+          },
+        },
+      });
+
+      if (!newReminder) {
+        throw new Error('Reminder not found');
+      }
+
+      return newReminder?.toEntity();
     });
   }
 
@@ -118,5 +135,24 @@ export class ReminderRepository implements IReminderRepository {
     return days.map((day) => {
       return day.toEntity();
     });
+  }
+
+  async findReminder(input: { id: string }): Promise<Reminder | undefined> {
+    const repository = this.ds.getRepository(ReminderModel);
+
+    const reminder = await repository.findOne({
+      where: {
+        id: input.id,
+      },
+      relations: {
+        dueDates: true,
+        user: true,
+        reminderDays: {
+          day: true,
+        },
+      },
+    });
+
+    return reminder?.toEntity();
   }
 }
