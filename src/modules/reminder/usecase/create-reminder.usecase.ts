@@ -2,12 +2,15 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Reminder } from 'src/modules/reminder/entity/reminder.entity';
 import { ReminderStatusEnum } from 'src/modules/reminder/enum/reminder-status.enum';
 import { IReminderRepository } from 'src/modules/reminder/interfaces/repository/reminder-repository.interface';
+import { IEventEmitterLib } from 'src/shared/libs/event-emitter/interface/event-emitter-lib.interface';
 
 @Injectable()
 export class CreateReminderUseCase {
   constructor(
     @Inject('IReminderRepository')
     private readonly reminderRepository: IReminderRepository,
+    @Inject('IEventEmitterLib')
+    private readonly eventEmitterLib: IEventEmitterLib,
   ) {}
 
   async execute(
@@ -44,6 +47,8 @@ export class CreateReminderUseCase {
       userId,
     );
 
+    this.eventEmitterLib.emit('reminder.created', reminder);
+    console.log('Reminder created event emitted:', reminder);
     return reminder;
   }
 }
