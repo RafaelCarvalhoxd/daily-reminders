@@ -26,5 +26,9 @@ export default () => {
       user: requiredEnv('MAIL_USER'),
       pass: requiredEnv('MAIL_PASS'),
     },
+    redis: {
+      host: requiredEnv('REDIS_HOST'),
+      port: parseInt(process.env.REDIS_PORT ?? '6379', 10),
+    },
   };
 };
